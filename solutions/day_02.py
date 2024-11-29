@@ -1,4 +1,4 @@
-from dagster import asset, ScheduleDefinition, AssetSelection, DefaultScheduleStatus
+from dagster import asset, ScheduleDefinition, AssetSelection, DefaultScheduleStatus, Definitions
 
 @asset(group_name="my_group")
 def a(): ...
@@ -20,4 +20,9 @@ minute_schedule = ScheduleDefinition(
     target = AssetSelection.groups("my_group"),
     cron_schedule= "* * * * *",
     default_status=DefaultScheduleStatus.RUNNING
+)
+
+defs = Definitions(
+    assets = [a, b, c],
+    schedules=  [minute_schedule]
 )
